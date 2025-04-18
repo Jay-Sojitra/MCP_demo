@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "taskServer": {
+      "name": "Task Server",
+      "url": "http://localhost:5000",
+      "tools": [
+        {
+          "name": "task_manager",
+          "description": "Manage tasks in the database",
+          "commands": {
+            "create": {
+              "pattern": "add task {title} with description {description} and due date {dueDate}",
+              "method": "POST",
+              "endpoint": "/api/add-task",
+              "body": {
+                "title": "{title}",
+                "description": "{description}",
+                "dueDate": "{dueDate}"
+              }
+            },
+            "list": {
+              "pattern": "show all tasks",
+              "method": "GET",
+              "endpoint": "/api/tasks"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
