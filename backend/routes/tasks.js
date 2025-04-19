@@ -20,6 +20,7 @@ router.get('/tasks/:id', (req, res) => {
 
 // Create a new task
 router.post('/tasks', (req, res) => {
+    console.log("calleddddddddddddddddddd");
     const task = {
         id: Date.now().toString(),
         title: req.body.title,
