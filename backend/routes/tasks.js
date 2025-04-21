@@ -21,6 +21,7 @@ router.get('/tasks/:id', (req, res) => {
 // Create a new task
 router.post('/tasks', (req, res) => {
     console.log("calleddddddddddddddddddd");
+    console.log("req.body", req.body);
     const task = {
         id: Date.now().toString(),
         title: req.body.title,
@@ -36,13 +37,13 @@ router.post('/tasks', (req, res) => {
 router.put('/tasks/:id', (req, res) => {
     const index = tasks.findIndex(t => t.id === req.params.id);
     if (index === -1) return res.status(404).json({ error: 'Task not found' });
-    
+
     tasks[index] = {
         ...tasks[index],
         ...req.body,
         updatedAt: new Date().toISOString()
     };
-    
+
     res.json({ task: tasks[index] });
 });
 
@@ -50,7 +51,7 @@ router.put('/tasks/:id', (req, res) => {
 router.delete('/tasks/:id', (req, res) => {
     const index = tasks.findIndex(t => t.id === req.params.id);
     if (index === -1) return res.status(404).json({ error: 'Task not found' });
-    
+
     const deletedTask = tasks.splice(index, 1)[0];
     res.json({ task: deletedTask });
 });
