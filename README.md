@@ -24,15 +24,45 @@ This will start a server on port 5000 that provides API endpoints for task manag
 
 ### Step 2: Set up the MCP Server
 
-For Windows users:
-- Double-click the `install.bat` file in the `mcp-server` directory
+```bash
+cd mcp-server
+npm install
+```
 
-For manual setup:
-- Follow the instructions in the [MCP Server README](mcp-server/README.md)
+### Step 3: Configure and Start the MCP Server in Cursor
 
-### Step 3: Restart Cursor
+1. The `.cursor/mcp.json` file already contains the necessary configuration
+2. Restart Cursor to load the MCP configuration
+3. Open Cursor chat settings
+4. Navigate to the MCP section of settings
+5. Find "TaskManager" in the server list
+6. Enable the toggle switch next to "TaskManager" (should be green when on)
+7. You should see the available tools (createTask, updateTask, deleteTask, greet) listed
 
-Restart Cursor to load the MCP configuration.
+## Available MCP Capabilities
+
+### Tools
+
+- `createTask`: Add a new task to the system
+  - Parameters:
+    - `title`: Task title (string)
+    - `description`: Task description (string)
+    - `status`: Task status (string, defaults to "pending")
+
+- `updateTask`: Update an existing task
+  - Parameters:
+    - `id`: Task ID (string)
+    - `title`: New task title (optional string)
+    - `description`: New task description (optional string)
+    - `status`: New task status (optional string)
+
+- `deleteTask`: Delete a task
+  - Parameters:
+    - `id`: Task ID (string)
+
+- `greet`: Get a greeting message
+  - Parameters:
+    - `name`: Person to greet (string)
 
 ## Using Task Management in Cursor
 
@@ -40,7 +70,7 @@ Once set up, you can use natural language to manage tasks in Cursor:
 
 - **List tasks**: "Show me all my tasks"
 - **Create a task**: "Create a new task titled 'Implement MCP' with description 'Set up MCP server for task management'"
-- **Update a task**: "Mark task [task-id] as completed"
+- **Update a task**: "Mark task [task-id] as completed" or "Update the title of task [task-id] to 'New Title'"
 - **Delete a task**: "Delete task [task-id]"
 
 ## Troubleshooting
@@ -49,8 +79,9 @@ If you encounter issues:
 
 1. **MCP server not connecting**:
    - Check the `.cursor/mcp.json` file to ensure paths are correctly specified
-   - Always use relative paths in the `args` field (e.g., `"args": ["mcp-server/index.js"]`)
-   - Install dependencies with `cd mcp-server && npm install`
+   - Always use relative paths in the `args` field when possible
+   - Verify that you've installed dependencies with `cd mcp-server && npm install`
+   - Make sure the MCP server is enabled in Cursor settings (toggle is green)
 
 2. **"Client closed" errors in Cursor logs**:
    - Try the simplified test server: `"args": ["mcp-server/simple-test.js"]`
@@ -60,11 +91,14 @@ If you encounter issues:
    - Make sure the backend server is running on port 5000
    - Check that the API_URL environment variable is correct
 
-For more detailed troubleshooting steps, see the [MCP Server README](mcp-server/README.md).
-
 ## How It Works
 
 This project uses the Model Context Protocol (MCP) to connect Cursor to the task management API. The MCP server acts as a bridge, translating natural language requests in Cursor into API calls to the backend server.
+
+### Tools
+
+The MCP server provides tools, which are function-like interfaces that can be called with parameters:
+- Example: `createTask` tool for creating tasks
 
 ## Resources
 
